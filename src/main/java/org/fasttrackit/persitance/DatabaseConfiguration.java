@@ -21,7 +21,7 @@ public class DatabaseConfiguration {
             return DriverManager.getConnection (
                     properties.getProperty("url"),
                     properties.getProperty("username"),
-                    properties.getProperty("passworld"));
+                    properties.getProperty("password"));
         } finally {
             // closing imput stream to allow memory cleanup
 
