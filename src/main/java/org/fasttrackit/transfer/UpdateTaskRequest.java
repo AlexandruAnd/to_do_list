@@ -1,21 +1,12 @@
-package org.fasttrackit.domain;
+package org.fasttrackit.transfer;
 
 import java.time.LocalDate;
 
-public class task {
-
-    private long id;
+//DTO(data transfer object)
+public class UpdateTaskRequest {
     private String description;
     private LocalDate deadline;
     private boolean done;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;
@@ -43,9 +34,8 @@ public class task {
 
     @Override
     public String toString() {
-        return "task{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
+        return "UpdateTaskRequest{" +
+                "description='" + description + '\'' +
                 ", deadline=" + deadline +
                 ", done=" + done +
                 '}';
