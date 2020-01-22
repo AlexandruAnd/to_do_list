@@ -1,5 +1,6 @@
 package org.fasttrackit;
 
+import org.fasttrackit.domain.Task;
 import org.fasttrackit.persitance.TaskRepository;
 import org.fasttrackit.transfer.CreateTaskRequest;
 import org.fasttrackit.transfer.UpdateTaskRequest;
@@ -7,6 +8,7 @@ import org.fasttrackit.transfer.UpdateTaskRequest;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Hello world!
@@ -21,6 +23,9 @@ public class App
         request.setDeadline(LocalDate.now().plusWeeks(1));
 
         taskRepository.createTask(request);
+
+        List<Task> tasks = taskRepository.getTasks();
+        System.out.println(tasks);
     }
 //        UpdateTaskRequest request = new UpdateTaskRequest();
 //        request.setDone(true);
