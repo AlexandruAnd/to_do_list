@@ -22,6 +22,7 @@ public class TaskServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccesControlHeaders(resp);
         CreateTaskRequest request = ObjectMapperConfiguration.objectMapper.readValue(
                 req.getReader(), CreateTaskRequest.class);
 
@@ -35,6 +36,7 @@ public class TaskServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
+        setAccesControlHeaders(resp);
 
         try {
             taskService.deleteTask(Long.parseLong(id));
@@ -46,6 +48,7 @@ public class TaskServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
+        setAccesControlHeaders(resp);
         UpdateTaskRequest request = ObjectMapperConfiguration.objectMapper.readValue(
                 req.getReader(), UpdateTaskRequest.class);
 
@@ -60,6 +63,7 @@ public class TaskServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            setAccesControlHeaders(resp);
             List<Task> tasks = taskService.getTasks();
             String response = ObjectMapperConfiguration.objectMapper.writeValueAsString(tasks);
             resp.getWriter().print(response);
@@ -67,5 +71,16 @@ public class TaskServlet extends HttpServlet {
         } catch (SQLException | ClassNotFoundException e) {
             resp.sendError(500,"Internal server error: " + e.getMessage());
         }
+    }
+// for pre-flight request
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccesControlHeaders(resp);
+    }
+// CORS configuraton (cross-origins-resurses-sharing)
+    private void setAccesControlHeaders(HttpServletResponse resp){
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        resp.setHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE");
+        resp.setHeader("Access-Control-Allow-Headers","content-type");
     }
 }
